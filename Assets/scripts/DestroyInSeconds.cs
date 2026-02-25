@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class DestroyInSeconds : MonoBehaviour
 {
-[SerializeField]
-private float secondsToDestroy = 1f;
-private void OnEnable()
+    [SerializeField]
+    private float secondsToDestroy = 1f;
+    private void OnEnable()
     {
         Invoke(nameof(DestroySelf), secondsToDestroy);
     }

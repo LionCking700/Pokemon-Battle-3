@@ -31,10 +31,6 @@ public class InstantiatePoolObjects : MonoBehaviour
             currentObject.SetActive(true);
         }
     }
-    public Void SetPrefab(GameObject newPrefab)
-    {
-        prefab = newPrefab;
-    }
     private GameObject GetPoolObject()
     {
         foreach (var obj in objectPool)
@@ -62,4 +58,3 @@ public class InstantiatePoolObjects : MonoBehaviour
         }
     }
 }
- 

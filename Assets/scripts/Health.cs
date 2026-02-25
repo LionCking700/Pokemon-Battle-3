@@ -39,4 +39,3 @@ public class Health : MonoBehaviour
         _healthSlider.value = _currentHealth / _maxHealth;
     }
 }
- 
