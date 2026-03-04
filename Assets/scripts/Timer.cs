@@ -1,0 +1,53 @@
+using UnityEngine;
+using UnityEngine.UI;
+
+public class Timer : MonoBehaviour
+{
+[SerializeField]
+private SecondData[] secondsData;
+[SerializeField]
+private Image timerImage;
+[SerializeField]
+private string timerAnimationName;
+[SerializeField]
+private UnityEvent onTimerEnd;
+private Anmator timeAnimator;
+private Coroutine timerCoroutine;
+private void Awake()
+    {
+        timerAnimator = timerImage.GetComponent<Animator>();
+    }
+    public void StartTimer(int duration)
+    {
+        if(timerCoroutine != null)
+        {
+            StopCoroutine(timerCoroutine);
+        }
+        timerCoroutine = StartCoroutine(timerCoroutine(duration));
+    }
+    private IEnumerator TimerCoroutine(int duration)
+    {
+        for (int i = 0; i < duration; i++)
+        {
+            SoundManager.instance.Play(secondsData[i].soundname);
+            timerImage.sprite = secondsData[i].image;
+            timerAnimator.Play(timerAnimationName, 0, 0f);
+            yield return new WaitForSeconds(1f);
+        }
+        onTimerEnd?.Invoke();
+    }
+    public void StopTimer()
+    {
+        if (timerCoroutine != null)
+        {
+            StopCoroutine(timerCoroutine);
+            timerCoroutine = null;
+        }
+    }
+}
+[System.Serializable]
+public class SecondData
+{
+    public string soundname;
+    public Sprite image;
+}

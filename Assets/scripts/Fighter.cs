@@ -21,10 +21,20 @@ public class Fighter : MonoBehaviour
         { 
             Attack attack = new Attack();
             attack.attackData = attackData;
-            attack.particlesPool = Instantiate(attackData.attackParticles).GetComponent<InstantiatePoolObjects>();
-            attack.particlesPool.SetPrefab(attackData.attackParticles);
+
+            GameObject instantiateObject = new GameObject(attackData.attackName + "Pool");
+            InstantiatePoolObjects pool = instantiateObject.AddComponent<InstantiatePoolObjects>();
+            pool.SetPrefab(attackData.attackParticles);
+            attack.particlesPool = pool;
+            pool.transform.SetParent(transform);
+
+            GameObject hitInstantiateObject = new GameObject(attackData.attackName + "Hit Pool");
+            InstantiatePoolObjects hitPool = hitInstantiateObject.AddComponent<InstantiatePoolObjects>();
+            hitPool.SetPrefab(attackData.attackHitParticles);
+            attack.hitParticlesPool = hitPool;
+            hitPool.transform.SetParent(transform);
+
             attacks.Add(attack);
-            attack.particlesPool.transform.SetParent(transform);
         }
     }
     public Attack GetRandomAttack()
