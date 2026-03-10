@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
 using System.Collections.Generic;
-using System.Collections;
  
  
  
@@ -11,11 +10,14 @@ public class Fighter : MonoBehaviour
     private CharacterData characterData;
     [SerializeField]
     private UnityEvent onInitialize;
+    private Animator animator;
+    public Animator Animator => animator;
+    private Health health;
+    public Health Health => health;
     private List<Attack> attacks;
     public Attack[] Attacks => attacks.ToArray();
     private void Awake()
     {
-       
         attacks = new List<Attack>();
         foreach (AttackData attackData in characterData.attacks)
         { 

@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
+using UnityEngine.Events;
 
 public class Timer : MonoBehaviour
 {
@@ -11,7 +13,7 @@ private Image timerImage;
 private string timerAnimationName;
 [SerializeField]
 private UnityEvent onTimerEnd;
-private Anmator timeAnimator;
+private Animator timerAnimator;
 private Coroutine timerCoroutine;
 private void Awake()
     {
@@ -23,7 +25,7 @@ private void Awake()
         {
             StopCoroutine(timerCoroutine);
         }
-        timerCoroutine = StartCoroutine(timerCoroutine(duration));
+        timerCoroutine = StartCoroutine(TimerCoroutine(duration));
     }
     private IEnumerator TimerCoroutine(int duration)
     {
