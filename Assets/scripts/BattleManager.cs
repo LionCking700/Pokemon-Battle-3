@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 using System.Collections.Generic;
+using System.Collections;
 
 public class BattleManager : MonoBehaviour
 {
@@ -35,8 +36,29 @@ public void AddFighter(Fighter fighter)
             }
         }
     }
-    public void StartBattle()
+    public IEnumerator BattleCoroutine()
     {
-        
+       while (fighters.Count > 1)
+        {
+            Fighter attacker = fighters[Random.Range(0, fighters.Count)];
+            Fighter defender = fighters[Random.Range(0, fighters.Count)];
+            while (defender == attacker)
+            {
+                defender = fighters[Random.Range(0, fighters.Count)];
+            }
+            attacker.transform.LookAt(defender.transform);
+            defender.transform.LookAt(attacker.transform);
+            Attack attack = attacker.GetRandomAttack();
+            attacker.Animator.Play(attack.attackData.animationName);
+            attack.particlesPool.InstantiateObject(attacker.transform.position);
+            float damage = Random.Range(attack.attackData.minDamage, attack.attackData.maxDamage);
+            yield return new WaitForSeconds(attack.attackData.attackDuration);
+            attack.hitParticlesPool.InstantiateObject(defender.transform.position);
+            defender.Health.TakeDamage(damage);
+            if (defender.Health.CurrentHealth <= 0)
+            {
+                RemoveFighter(defender);
+            }
+        } 
     }
 }

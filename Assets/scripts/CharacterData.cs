@@ -11,7 +11,7 @@ public class CharacterData : ScriptableObject
 public class AttackData
 {
     public string attackName;
-    public float miniDamage;
+    public float minDamage;
     public float maxDamage;
     public string animationName;
     public float attackDuration;
